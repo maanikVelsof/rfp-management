@@ -28,7 +28,24 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+
+        /**
+         * @BOC
+         * @Task #160741 Develop RFP Management System
+         * @Author Maanik Arya 
+         * @date 31-05-2025
+         * @use_of_code: Redirect the user to the dashboard based on their user type.
+         */
+        // return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        if($user->user_type == 'admin'){
+            return redirect()->intended(route('admin.dashboard', absolute:false));
+        }elseif($user->user_type == 'vendor'){
+            return redirect()->intended(route('vendor.dashboard', absolute: false));
+        }
+        /**
+         * @EOC
+         */
     }
 
     /**
