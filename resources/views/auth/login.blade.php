@@ -61,7 +61,12 @@
         <div class="text-center mt-4">
             <p class="mb-2">
                 <a href="{{ route('register') }}" class="text-decoration-none">
-                    <i class="fas fa-user-plus me-1"></i> {{ __('Register') }}
+                    <i class="fas fa-user-plus me-1"></i> {{ __('Register as Admin') }}
+                </a>
+            </p>
+            <p class="mb-2">
+                <a href="{{ route('vendor.register') }}" class="text-decoration-none">
+                    <i class="fas fa-user-plus me-1"></i> {{ __('Register as Vendor') }}
                 </a>
             </p>
             @if (Route::has('password.request'))

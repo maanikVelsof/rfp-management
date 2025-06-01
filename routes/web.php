@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\CategoryController;
 // Vendor Controllers
 use App\Http\Controllers\Vendor\IndexController as VendorIndexController;
 
+// Auth Controllers
+use App\Http\Controllers\Auth\VendorRegisterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,4 +62,9 @@ Route::middleware(['auth' , VendorMiddleware::class])
     Route::get('/dashboard', [VendorIndexController::class, 'index'])->name('dashboard');
 });
 
+Route::middleware('guest')->group(function () {
+    Route::get('vendor/register', [VendorRegisterController::class, 'showRegistrationForm'])
+        ->name('vendor.register');
+    Route::post('vendor/register', [VendorRegisterController::class, 'register']);
+});
 require __DIR__.'/auth.php';

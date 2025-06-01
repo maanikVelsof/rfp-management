@@ -49,18 +49,19 @@
                     <ul class="navbar-nav ms-auto">
                         @if (Route::has('login'))
                             @auth
-                                <li class="nav-item">
-                                    <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a>
-                                </li>
+                                @if (Auth::user()->user_type == 'admin')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.dashboard') }}" class="nav-link">Admin Dashboard</a>
+                                    </li>
+                                @else
+                                    <li class="nav-item">
+                                        <a href="{{ route('vendor.dashboard') }}" class="nav-link">Vendor Dashboard</a>
+                                    </li>
+                                @endif
                             @else
                                 <li class="nav-item">
                                     <a href="{{ route('login') }}" class="nav-link">Login</a>
                                 </li>
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('register') }}" class="nav-link">Register</a>
-                                    </li>
-                                @endif
                             @endauth
                         @endif
                     </ul>
@@ -74,7 +75,7 @@
                 <h2 class="text-white mb-3">RFP Management System</h2>
                 <h1 class="display-4 mb-4">Streamline Your RFP Process</h1>
                 <p class="lead mb-4">Efficiently manage, track, and respond to Request for Proposals in one centralized platform</p>
-                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="#" class="btn btn-primary btn-lg">Get Started</a>
             </div>
         </section>
 

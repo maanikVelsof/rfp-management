@@ -12,11 +12,12 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
 
     <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    @stack('styles')
     
     <!-- Custom styles -->
     <style>
@@ -38,6 +39,14 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             padding: 2rem;
         }
+        /* Special styling for vendor registration */
+        .vendor-register .auth-wrapper {
+            align-items: flex-start;
+            padding-top: 2rem;
+        }
+        .vendor-register .auth-card {
+            max-width: 1000px;
+        }
         .auth-logo {
             text-align: center;
             margin-bottom: 2rem;
@@ -54,7 +63,7 @@
     </style>
 </head>
 
-<body>
+<body class="{{ Request::is('vendor/register') ? 'vendor-register' : '' }}">
     <div class="auth-wrapper">
         <div class="auth-card">
             <div class="auth-logo">
@@ -66,9 +75,22 @@
         </div>
     </div>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- Core JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/velovalidation/velovalidation.js') }}"></script>
+
+    <!-- Custom Scripts -->
+    @stack('scripts')
+
+    <script>
+        // Setup CSRF token for AJAX requests
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </body>
 
 </html>

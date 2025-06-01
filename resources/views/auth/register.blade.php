@@ -1,12 +1,21 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <style>
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+    </style>
+
+    <form method="POST" action="{{ route('register') }}" id="registerForm">
         @csrf
 
         <!-- Name -->
         <div class="mb-3">
-            <label for="name" class="form-label">{{ __('Name') }}</label>
+            <label for="name" class="form-label">{{ __('Name') }} <span class="text-danger">*</span></label>
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" 
-                name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
+                name="name" value="{{ old('name') }}">
+            <div class="error-message" id="name_error"></div>
             @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -14,9 +23,10 @@
 
         <!-- Email Address -->
         <div class="mb-3">
-            <label for="email" class="form-label">{{ __('Email') }}</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                name="email" value="{{ old('email') }}" required autocomplete="username">
+            <label for="email" class="form-label">{{ __('Email') }} <span class="text-danger">*</span></label>
+            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" 
+                name="email" value="{{ old('email') }}">
+            <div class="error-message" id="email_error"></div>
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -24,9 +34,10 @@
 
         <!-- Password -->
         <div class="mb-3">
-            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <label for="password" class="form-label">{{ __('Password') }} <span class="text-danger">*</span></label>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                name="password" required autocomplete="new-password">
+                name="password">
+            <div class="error-message" id="password_error"></div>
             @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -34,9 +45,10 @@
 
         <!-- Confirm Password -->
         <div class="mb-3">
-            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
             <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" 
-                name="password_confirmation" required autocomplete="new-password">
+                name="password_confirmation">
+            <div class="error-message" id="password_confirmation_error"></div>
             @error('password_confirmation')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -73,4 +85,8 @@
             </p>
         </div>
     </form>
+
+    @push('scripts')
+    <script src="{{ asset('assets/js/register.js') }}"></script>
+    @endpush
 </x-guest-layout>

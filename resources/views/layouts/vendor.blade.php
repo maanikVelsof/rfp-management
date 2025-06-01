@@ -68,15 +68,6 @@
                 <a href="{{ route('vendor.dashboard') }}" class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                 </a>
-                <a href="{{ route('vendor.rfps.index') }}" class="nav-link {{ request()->routeIs('vendor.rfps.*') ? 'active' : '' }}">
-                    <i class="fas fa-file-contract me-2"></i> Available RFPs
-                </a>
-                <a href="{{ route('vendor.proposals.index') }}" class="nav-link {{ request()->routeIs('vendor.proposals.*') ? 'active' : '' }}">
-                    <i class="fas fa-paper-plane me-2"></i> My Proposals
-                </a>
-                <a href="{{ route('vendor.profile') }}" class="nav-link {{ request()->routeIs('vendor.profile.*') ? 'active' : '' }}">
-                    <i class="fas fa-building me-2"></i> Company Profile
-                </a>
             </nav>
         </div>
 
@@ -106,7 +97,7 @@
                                 <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('vendor.profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -132,6 +123,8 @@
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.0/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="{{ asset('assets/vendor/velovalidation/velovalidation.js') }}"></script>
     @stack('scripts')
 </body>
 </html> 
