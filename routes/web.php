@@ -1,11 +1,20 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+// Middleware
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\VendorMiddleware;
-use Illuminate\Support\Facades\Route;
+
+// Admin Controllers
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+
+// Vendor Controllers
 use App\Http\Controllers\VendorController;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,6 +41,7 @@ Route::middleware(['auth' , AdminMiddleware::class])
 ->prefix('admin')
 ->group(function(){
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::resource('categories', CategoryController::class);
 });
 
 

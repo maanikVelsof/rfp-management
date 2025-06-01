@@ -43,6 +43,9 @@ class AuthenticatedSessionController extends Controller
         }elseif($user->user_type == 'vendor'){
             return redirect()->intended(route('vendor.dashboard', absolute: false));
         }
+
+        // Define the fallback route for the user if they are not admin or vendor
+        return redirect()->intended('/'); // fallback to home page
         /**
          * @EOC
          */
