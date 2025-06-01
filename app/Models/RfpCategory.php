@@ -10,6 +10,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RfpCategory extends Model
 {
@@ -25,6 +26,8 @@ class RfpCategory extends Model
      * @relationship_with_rfp_vendor_category_mapping: The rfp_category model has a one-to-many relationship with the rfp_vendor_category_mapping model.
      * The use of relationship is to get the rfp_detail and rfp_vendor_category_mapping data from the rfp_category model.
      */
+    use HasFactory;
+    
     protected $fillable = ['name' , 'status'];
 
     public function rfpDetails()

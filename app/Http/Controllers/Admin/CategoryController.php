@@ -21,8 +21,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = RfpCategory::all();
-        return view('admin.categories.index' , compact('categories'));
+        $query = RfpCategory::orderBy('id', 'desc');
+        Log::info('Category Query SQL: ' . $query->toSql());
+        $categories = $query->paginate(5);
+        Log::info('Category IDs in order: ' . $categories->pluck('id'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -46,11 +49,11 @@ class CategoryController extends Controller
             
             RfpCategory::create($requestedData);
 
-            return redirect()->route('categories.index')->with('success' , 'Category Created!');
+            return redirect()->route('admin.categories.index')->with('success' , 'Category Created!');
         }catch(\Exception $e){
             // Log the error
             Log::error('Failed to create category: ' . $e->getMessage());
-            return redirect()->route('categories.index')->with('error' , 'Failed to create category!');
+            return redirect()->route('admin.categories.index')->with('error' , 'Failed to create category!');
         }
     }
 
@@ -65,7 +68,7 @@ class CategoryController extends Controller
         }catch(\Exception $e){
             // Log the error
             Log::error('Failed to show category: ' . $e->getMessage());
-            return redirect()->route('categories.index')->with('error' , 'Category not found!');
+            return redirect()->route('admin.categories.index')->with('error' , 'Category not found!');
         }
     }
 
@@ -84,17 +87,17 @@ class CategoryController extends Controller
     {
         try{
             $requestedData = $request->validate([
-                'name' => 'required|string|unique:rfp_categories,name' . $category->id,
+                'name' => 'required|string|unique:rfp_categories,name,' . $category->id,
                 'status' => 'required|boolean'
             ]);
 
             $category->update($requestedData);
 
-            return redirect()->route('categories.index')->with('success','Category updated!');
+            return redirect()->route('admin.categories.index')->with('success','Category updated!');
         }catch(\Exception $e){
             // Log the error
             Log::error('Failed to update category: ' . $e->getMessage());
-            return redirect()->route('categories.index')->with('error' , 'Failed to update category!');
+            return redirect()->route('admin.categories.index')->with('error' , 'Failed to update category!');
         }
     }
 
@@ -105,11 +108,11 @@ class CategoryController extends Controller
     {
         try{
             $category->delete();
-            return redirect()->route('categories.index')->with('success', 'Category deleted!');
+            return redirect()->route('admin.categories.index')->with('success', 'Category deleted!');
         }catch(\Exception $e){
             // Log the error
             Log::error('Failed to delete category: ' . $e->getMessage());
-            return redirect()->route('categories.index')->with('error', 'Failed to delete category!');
+            return redirect()->route('admin.categories.index')->with('error', 'Failed to delete category!');
         }
     }
 }

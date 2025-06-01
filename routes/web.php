@@ -8,11 +8,11 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\VendorMiddleware;
 
 // Admin Controllers
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\CategoryController;
 
 // Vendor Controllers
-use App\Http\Controllers\VendorController;
+use App\Http\Controllers\Vendor\IndexController as VendorIndexController;
 
 
 Route::get('/', function () {
@@ -39,8 +39,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth' , AdminMiddleware::class])
 ->prefix('admin')
+->name('admin.')
 ->group(function(){
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminIndexController::class, 'index'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
 });
 
@@ -54,8 +55,9 @@ Route::middleware(['auth' , AdminMiddleware::class])
  */
 Route::middleware(['auth' , VendorMiddleware::class])
 ->prefix('vendor')
+->name('vendor.')
 ->group(function(){
-    Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('vendor.dashboard');
+    Route::get('/dashboard', [VendorIndexController::class, 'index'])->name('dashboard');
 });
 
 require __DIR__.'/auth.php';
