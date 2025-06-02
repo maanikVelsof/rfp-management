@@ -71,6 +71,10 @@
                 <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                     <i class="fas fa-list me-2"></i> Categories
                 </a>
+
+                <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors.*') ? 'active' : '' }}">
+                    <i class="fas fa-users me-2"></i> Vendors
+                </a>
             </nav>
         </div>
 

@@ -2,14 +2,24 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>    
+    @endif
+
+    <form method="POST" action="{{ route('login') }}"  id="loginForm">
         @csrf
 
         <!-- Email Address -->
         <div class="mb-3">
             <label for="email" class="form-label">{{ __('Email') }}</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" 
+                name="email" value="{{ old('email') }}"  autofocus  autocomplete="nope">
+            <div class="error-message" id="email_error"></div>
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -19,7 +29,8 @@
         <div class="mb-3">
             <label for="password" class="form-label">{{ __('Password') }}</label>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                name="password" required autocomplete="current-password">
+                name="password"  autocomplete="current-password">
+            <div class="error-message" id="password_error"></div>
             @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -78,4 +89,8 @@
             @endif
         </div>
     </form>
+
+    @push('scripts')
+    <script src="{{ asset('assets/js/login.js') }}"></script>
+    @endpush
 </x-guest-layout>

@@ -10,6 +10,7 @@ use App\Http\Middleware\VendorMiddleware;
 // Admin Controllers
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\VendorController;
 
 // Vendor Controllers
 use App\Http\Controllers\Vendor\IndexController as VendorIndexController;
@@ -45,6 +46,9 @@ Route::middleware(['auth' , AdminMiddleware::class])
 ->group(function(){
     Route::get('/dashboard', [AdminIndexController::class, 'index'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
+    Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+    Route::post('/vendors/{user}/approve', [VendorController::class, 'approveVendor'])->name('vendors.approve');
+    Route::post('/vendors/{user}/reject', [VendorController::class, 'rejectVendor'])->name('vendors.reject');
 });
 
 

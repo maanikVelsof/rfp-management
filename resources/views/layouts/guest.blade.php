@@ -60,6 +60,12 @@
             border-radius: 50%;
             margin: 0 5px;
         }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 
