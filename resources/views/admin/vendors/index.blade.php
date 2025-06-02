@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title' , 'Vendors')
 
 @section('content')
 <div class="container-fluid px-4">
@@ -13,10 +14,12 @@
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">Vendor Id</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Company</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Revenue (Last 3 Years in Lakh)</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -24,10 +27,13 @@
                             <tbody>
                                 @forelse($vendors as $vendor)
                                 <tr>
-                                    <td>{{ ($vendors->currentPage() - 1) * $vendors->perPage() + $loop->iteration }}</td>
+                                    <!-- <td>{{ ($vendors->currentPage() - 1) * $vendors->perPage() + $loop->iteration }}</td> -->
+                                    <td>{{ $vendor->id}}</td>
                                     <td>{{ $vendor->name }}</td>
                                     <td>{{ $vendor->email }}</td>
                                     <td>{{ $vendor->vendorDetail->company_name ?? 'N/A' }}</td>
+                                    <td>{{ $vendor->vendorDetail->phone_number }}</td>
+                                    <td>{{ $vendor->vendorDetail->revenue }}</td>
                                     <td>
                                         @php
                                             $status = $vendor->vendorDetail->status ?? 'pending';
@@ -74,13 +80,12 @@
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-4">
-                        <div class="text-muted">
-                            Showing {{ $vendors->firstItem() ?? 0 }} to {{ $vendors->lastItem() ?? 0 }} of {{ $vendors->total() }} vendors
-                        </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        @if($vendors->hasPages())
                         <div>
                             {{ $vendors->links('pagination::bootstrap-5') }}
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
