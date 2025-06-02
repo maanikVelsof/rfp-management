@@ -38,6 +38,17 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            /**
+             * @BOC
+             * @Task #160741 Develop RFP Management System
+             * @Author Maanik Arya 
+             * @date 31-05-2025
+             * @Description Added the code that when we register using the register form then the user type will be admin.
+             */
+            'user_type' => 'admin',
+            /**
+             * @EOC
+             */
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,6 +56,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // use of code : We have added the code that when we register then user will be redirected to the admin dashboard.
+        return redirect(route('admin.dashboard', absolute: false));
     }
 }

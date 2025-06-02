@@ -45,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * @BOC
+     * @Task #160741 Develop RFP Management System
+     * @Author Maanik Arya 
+     * @date 31-05-2025
+     * @use_of_code: Created the vendor detail relationship for the rfp_management_system.
+     * The user has one vendor detail therefore the relationship is one to one.
+     */
+    public function vendorDetail()
+    {
+        return $this->hasOne(\App\Models\RfpVendorDetail::class, 'user_id');
+    }
+    /**
+     * @EOC
+     */
 }
