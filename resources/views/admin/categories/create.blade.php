@@ -76,5 +76,5 @@
 @endsection
 
 @push('scripts')
-<!-- <script src="{{ asset('assets/js/create-categories.js') }}"></script> -->
+<script src="{{ asset('assets/js/create-categories.js') }}"></script>
 @endpush
