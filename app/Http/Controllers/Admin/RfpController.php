@@ -52,7 +52,6 @@ class RfpController extends Controller
             'vendors' => 'required|array',
             'vendors.*' => 'exists:users,id',
         ]);
-
         DB::beginTransaction();
 
         try {

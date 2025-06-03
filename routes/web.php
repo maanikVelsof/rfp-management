@@ -73,7 +73,7 @@ Route::middleware(['auth' , VendorMiddleware::class])
     Route::get('/dashboard', [VendorIndexController::class, 'index'])->name('dashboard');
     Route::get('/rfps', [VendorRfpController::class, 'index'])->name('rfps.index');
     Route::get('/rfps/{rfp}', [VendorRfpController::class, 'show'])->name('rfps.show');
-    Route::post('/rfps/{rfp}/quote', [VendorQuoteController::class, 'store'])->name('quotes.store');
+    Route::post('/rfps/{rfp}/quotes', [VendorQuoteController::class, 'store'])->name('quotes.store');
 });
 
 Route::middleware('guest')->group(function () {

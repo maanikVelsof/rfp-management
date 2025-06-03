@@ -16,14 +16,17 @@ class QuoteController extends Controller
 {
     public function store(Request $request, RfpDetail $rfp)
     {
+        
+        // Validate request
+        $request->validate([
+            'price_per_unit' => 'required|numeric',
+            'item_description' => 'required|string',
+            'quantity' => 'required|integer',
+            'total_cost' => 'required|numeric'
+        ]); 
+
+
         try {
-            // Validate request
-            $validated = $request->validate([
-                'price_per_unit' => 'required|numeric|min:0',
-                'item_description' => 'required|string',
-                'quantity' => 'required|integer|min:1',
-                'total_cost' => 'required|numeric|min:0'
-            ]);
 
             // Check if RFP is still active
             if ($rfp->status !== 'open') {
@@ -52,10 +55,10 @@ class QuoteController extends Controller
                 $quote = RfpQuote::create([
                     'rfp_id' => $rfp->id,
                     'vendor_id' => Auth::id(),
-                    'price_per_unit' => $validated['price_per_unit'],
-                    'item_description' => $validated['item_description'],
-                    'quantity' => $validated['quantity'],
-                    'total_cost' => $validated['total_cost'],
+                    'price_per_unit' => $request->price_per_unit,
+                    'item_description' => $request->item_description,
+                    'quantity' => $request->quantity,
+                    'total_cost' => $request->total_cost,
                     'submitted_at' => now()
                 ]);
 
@@ -66,7 +69,8 @@ class QuoteController extends Controller
 
                 DB::commit();
                 
-                return back()->with('success', 'Quote submitted successfully.');
+                return redirect()->route('vendor.rfps.index')
+                ->with('success', 'Quote submitted successfully.');
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error('Quote submission failed', [

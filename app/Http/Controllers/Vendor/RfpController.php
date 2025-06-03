@@ -67,7 +67,7 @@ class RfpController extends Controller
                 return back()->with('error', 'You have already submitted a quote for this RFP.');
             }
 
-            return view('vendor.rfps.show', compact('rfp'));
+            return view('vendor.rfps.submit-quote', compact('rfp'));
         } catch (Exception $e) {
             Log::error('Error showing RFP details', [
                 'rfp_id' => $rfp->id,

@@ -41,19 +41,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $requestedData = $request->validate([
+        try {
+            $validated = $request->validate([
                 'name' => 'required|string|unique:rfp_categories,name',
-                'status' => 'required|boolean'
+                'status' => 'required|in:0,1'
             ]);
-            
-            RfpCategory::create($requestedData);
 
-            return redirect()->route('admin.categories.index')->with('success' , 'Category Created!');
-        }catch(\Exception $e){
-            // Log the error
+            RfpCategory::create([
+                'name' => $validated['name'],
+                'status' => (bool) $validated['status']
+            ]);
+
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Category Created Successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
             Log::error('Failed to create category: ' . $e->getMessage());
-            return redirect()->route('admin.categories.index')->with('error' , 'Failed to create category!');
+            return redirect()->back()
+                ->with('error', 'Failed to create category. Please try again.')
+                ->withInput();
         }
     }
 
