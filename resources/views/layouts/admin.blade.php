@@ -75,6 +75,14 @@
                 <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ request()->routeIs('admin.vendors.*') ? 'active' : '' }}">
                     <i class="fas fa-users me-2"></i> Vendors
                 </a>
+
+                <a href="{{ route('admin.rfps.index') }}" class="nav-link {{ request()->routeIs('admin.rfps.*') ? 'active' : '' }}">
+                    <i class="fas fa-file-alt me-2"></i> RFPs
+                </a>
+
+                <a href="{{ route('admin.quotes.index') }}" class="nav-link {{ request()->routeIs('admin.quotes.*') ? 'active' : '' }}">
+                    <i class="fas fa-file-alt me-2"></i> Quotes
+                </a>
             </nav>
         </div>
 

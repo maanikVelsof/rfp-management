@@ -13,5 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class RfpVendorMapping extends Model
 {
-    //
+    protected $table = 'rfp_vendor_mapping';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'rfp_id',
+        'vendor_id',
+        'notified_at'
+    ];
 }

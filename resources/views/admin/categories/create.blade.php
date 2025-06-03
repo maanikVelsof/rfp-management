@@ -12,6 +12,18 @@
         </a>
     </div>
 
+    <!-- Alert Messages -->
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.categories.store') }}" method="POST">
@@ -23,8 +35,8 @@
                            class="form-control @error('name') is-invalid @enderror" 
                            id="name" 
                            name="name" 
-                           value="{{ old('name') }}" 
-                           required>
+                           value="{{ old('name') }}">
+                    <span id="name_error" class="error-message text-danger"></span>
                     @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -36,12 +48,12 @@
                     <label for="status" class="form-label">Status</label>
                     <select class="form-select @error('status') is-invalid @enderror" 
                             id="status" 
-                            name="status" 
-                            required>
+                            name="status">
                         <option value="">Select Status</option>
                         <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
                     </select>
+                    <span id="status_error" class="error-message text-danger"></span>
                     @error('status')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -62,3 +74,7 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<!-- <script src="{{ asset('assets/js/create-categories.js') }}"></script> -->
+@endpush

@@ -11,9 +11,13 @@ use App\Http\Middleware\VendorMiddleware;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\RfpController;
+use App\Http\Controllers\Admin\QuoteController;
 
 // Vendor Controllers
 use App\Http\Controllers\Vendor\IndexController as VendorIndexController;
+use App\Http\Controllers\Vendor\RfpController as VendorRfpController;
+use App\Http\Controllers\Vendor\QuoteController as VendorQuoteController;
 
 // Auth Controllers
 use App\Http\Controllers\Auth\VendorRegisterController;
@@ -49,6 +53,9 @@ Route::middleware(['auth' , AdminMiddleware::class])
     Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
     Route::post('/vendors/{user}/approve', [VendorController::class, 'approveVendor'])->name('vendors.approve');
     Route::post('/vendors/{user}/reject', [VendorController::class, 'rejectVendor'])->name('vendors.reject');
+    Route::get('rfps/close/{rfp}', [RfpController::class, 'close'])->name('rfps.close');
+    Route::resource('rfps', RfpController::class);
+    Route::get('/quotes', [QuoteController::class, 'index'])->name('quotes.index');
 });
 
 
@@ -64,6 +71,9 @@ Route::middleware(['auth' , VendorMiddleware::class])
 ->name('vendor.')
 ->group(function(){
     Route::get('/dashboard', [VendorIndexController::class, 'index'])->name('dashboard');
+    Route::get('/rfps', [VendorRfpController::class, 'index'])->name('rfps.index');
+    Route::get('/rfps/{rfp}', [VendorRfpController::class, 'show'])->name('rfps.show');
+    Route::post('/rfps/{rfp}/quotes', [VendorQuoteController::class, 'store'])->name('quotes.store');
 });
 
 Route::middleware('guest')->group(function () {
