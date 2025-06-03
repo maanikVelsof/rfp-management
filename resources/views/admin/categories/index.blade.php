@@ -27,25 +27,25 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="table-primary">
                         <tr>
-                            <th width="5%">#</th>
-                            <th>Category Name</th>
-                            <th width="15%">Status</th>
-                            <th width="15%">Actions</th>
+                            <th width="5%" class="align-middle">ID</th>
+                            <th class="align-middle">Category Name</th>
+                            <th width="15%" class="align-middle">Status</th>
+                            <th width="15%" class="align-middle">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($categories as $key => $category)
                             <tr>
-                                <td>{{ $category->id }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td>
+                                <td class="align-middle">{{ $category->id }}</td>
+                                <td class="align-middle">{{ $category->name }}</td>
+                                <td class="align-middle">
                                     @if($category->status)
                                         <span class="badge bg-success">Active</span>
                                     @else
                                         <span class="badge bg-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="align-middle">
                                     <div class="d-flex gap-2">
                                         <a href="{{ route('admin.categories.edit', $category->id) }}" 
                                            class="btn btn-primary btn-sm">

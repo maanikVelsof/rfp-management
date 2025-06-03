@@ -68,6 +68,9 @@
                 <a href="{{ route('vendor.dashboard') }}" class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                 </a>
+                <a href="{{ route('vendor.rfps.index') }}" class="nav-link {{ request()->routeIs('vendor.rfps.index') ? 'active' : '' }}">
+                    <i class="fas fa-file-alt me-2"></i> RFPs
+                </a>
             </nav>
         </div>
 

@@ -23,9 +23,10 @@ class VendorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check() && auth()->user()->user_type === 'vendor') {
-            return $next($request);
+            if (auth()->user()->vendorDetail->status === 'approved') {
+                return $next($request);
+            }
         }
-        
         abort(403, 'Unauthorized');
     }
 }
