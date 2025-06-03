@@ -20,6 +20,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <!-- RFPs Table -->
     <div class="card shadow mb-4">
@@ -28,24 +34,24 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="table-primary">
                         <tr>
-                            <th width="5%">#</th>
-                            <th width="10%">Title</th>
-                            <th width="15%">Category</th>
-                            <th width="15%">Submission Deadline</th>
-                            <th width="20%">Budget</th>
-                            <th width="10%">Status</th>
-                            <th width="15%">Actions</th>
+                            <th width="5%" class="align-middle">#</th>
+                            <th width="20%" class="align-middle">Title</th>
+                            <th width="15%" class="align-middle">Category</th>
+                            <th width="15%" class="align-middle">Submission Deadline</th>
+                            <th width="20%" class="align-middle">Budget</th>
+                            <th width="10%" class="align-middle">Status</th>
+                            <th width="15%" class="align-middle">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($rfps as $key => $rfp)
                             <tr>
-                                <td>{{ $rfp->id }}</td>
-                                <td>{{ $rfp->item_name }}</td>
-                                <td>{{ $rfp->category->name }}</td>
-                                <td>{{ $rfp->last_date }}</td>
-                                <td>{{ number_format($rfp->minimum_price, 2) }} - {{ number_format($rfp->maximum_price, 2) }}</td>
-                                <td>
+                                <td class="align-middle">{{ $rfp->id }}</td>
+                                <td class="align-middle">{{ $rfp->item_name }}</td>
+                                <td class="align-middle">{{ $rfp->category->name }}</td>
+                                <td class="align-middle">{{ $rfp->last_date }}</td>
+                                <td class="align-middle">{{ number_format($rfp->minimum_price, 2) }} - {{ number_format($rfp->maximum_price, 2) }}</td>
+                                <td class="align-middle">
                                     @if($rfp->status === 'open')
                                         <span class="badge bg-success">Open</span>
                                     @elseif($rfp->status === 'closed')
@@ -54,7 +60,7 @@
                                         <span class="badge bg-warning">Draft</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="align-middle">
                                     <div class="d-flex gap-2">
                                         @if($rfp->status === 'open')
                                             <a href="{{ route('admin.rfps.close', $rfp->id) }}" 

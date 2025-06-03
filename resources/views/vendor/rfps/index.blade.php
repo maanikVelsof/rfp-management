@@ -31,7 +31,7 @@
                         <tr>
                             <th width="5%" class="align-middle">ID</th>
                             <th class="align-middle">RFP Number</th>
-                            <th class="align-middle">RFP Name</th>
+                            <th width="20%" class="align-middle">RFP Name</th>
                             <th class="align-middle">Last Date</th>
                             <th class="align-middle">RFP Minimum Price</th>
                             <th class="align-middle">RFP Maximum Price</th>
@@ -53,8 +53,7 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex gap-2">
-                                <a href="{{ route('vendor.rfps.show', $rfp->id) }}" 
-                                           class="btn btn-primary btn-sm">
+                                        <a href="{{ route('vendor.rfps.show', $rfp->id) }}" class="btn btn-primary btn-sm">
                                             Apply
                                         </a>
                                     </div>

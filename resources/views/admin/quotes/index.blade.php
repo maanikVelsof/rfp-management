@@ -1,58 +1,71 @@
 @extends('layouts.admin')
 
+@section('title', 'Quotes')
+
 @section('content')
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Quotes List</h3>
-                </div>
-                <div class="card-body">
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+    <!-- Page Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Quotes</h1>
+        <!-- You can add a button here if needed -->
+    </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>RFP Number</th>
-                                    <th>Item Name</th>
-                                    <th>Vendor ID</th>
-                                    <th>Price Per Unit</th>
-                                    <th>Quantity</th>
-                                    <th>Total Price</th>
-                                    <th>Submitted At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($quotes as $quote)
-                                    <tr>
-                                        <td>{{ $quote->rfp->rfp_number }}</td>
-                                        <td>{{ $quote->rfp->item_name }}</td>
-                                        <td>{{ $quote->vendor_id }}</td>
-                                        <td>{{ number_format($quote->price_per_unit, 2) }}</td>
-                                        <td>{{ $quote->quantity }}</td>
-                                        <td>{{ number_format($quote->total_cost, 2) }}</td>
-                                        <td>{{ $quote->submitted_at }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No quotes found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-                    <div class="mt-4">
-                        {{ $quotes->links() }}
-                    </div>
-                </div>
+    <!-- Quotes Table -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="align-middle">RFP Number</th>
+                            <th class="align-middle">Item Name</th>
+                            <th class="align-middle">Vendor ID</th>
+                            <th class="align-middle">Price Per Unit</th>
+                            <th class="align-middle">Quantity</th>
+                            <th class="align-middle">Total Price</th>
+                            <th class="align-middle">Submitted At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($quotes as $quote)
+                            <tr>
+                                <td class="align-middle">{{ $quote->rfp->rfp_number }}</td>
+                                <td class="align-middle">{{ $quote->rfp->item_name }}</td>
+                                <td class="align-middle">{{ $quote->vendor_id }}</td>
+                                <td class="align-middle">{{ number_format($quote->price_per_unit, 2) }}</td>
+                                <td class="align-middle">{{ $quote->quantity }}</td>
+                                <td class="align-middle">{{ number_format($quote->total_cost, 2) }}</td>
+                                <td class="align-middle">{{ $quote->submitted_at }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center">No quotes found</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+
+            <!-- Pagination -->
+            @if($quotes->hasPages())
+                <div class="d-flex justify-content-end mt-3">
+                    {{ $quotes->onEachSide(1)->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
         </div>
     </div>
 </div>

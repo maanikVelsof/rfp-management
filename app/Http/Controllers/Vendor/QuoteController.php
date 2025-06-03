@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Exception;
 use App\Notifications\VendorQuoteSubmitted;
 use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+
 class QuoteController extends Controller
 {
     public function store(Request $request, RfpDetail $rfp)
@@ -62,10 +64,9 @@ class QuoteController extends Controller
                     'submitted_at' => now()
                 ]);
 
-                // Send email notification to admin
-                $adminEmail = 'maanik.arya@velsof.com';
-                Notification::route('mail', $adminEmail)
-                    ->notify(new VendorQuoteSubmitted($rfp, $quote));
+                // Send email notification to all admin users
+                $adminUsers = User::where('user_type', 'admin')->get();
+                Notification::send($adminUsers, new VendorQuoteSubmitted($rfp, $quote));
 
                 DB::commit();
                 

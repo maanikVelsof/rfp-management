@@ -83,9 +83,9 @@ class VendorRegisterController extends Controller
 
             $user->notify(new VendorRegistrationNotification());
 
-            $adminEmail = 'maanik.arya@velsof.com';
-            Notification::route('mail', $adminEmail)
-                ->notify(new AdminVendorRegistrationNotification($user));
+            // Send notification to all admin users
+            $adminUsers = User::where('user_type', 'admin')->get();
+            Notification::send($adminUsers, new AdminVendorRegistrationNotification($user));
 
             DB::commit();
 
